@@ -1,0 +1,36 @@
+package service
+
+import (
+	"time"
+
+	"github.com/felipematheus1337/InsightFlow-AI/go-crud-ms/schemas"
+	"gorm.io/gorm"
+)
+
+type EmployeeService struct {
+	db *gorm.DB
+}
+
+func (e EmployeeService) CreateEmployee(employee *schemas.Employee) (*schemas.EmployeeResponse, error) {
+
+	var response *schemas.EmployeeResponse
+
+	employee.HasAnyTaskDone = len(employee.Tasks) > 0
+
+	if err := e.db.Create(&employee).Error; err != nil {
+
+		return &schemas.EmployeeResponse{}, err
+	}
+
+	response = &schemas.EmployeeResponse{
+		Name:      employee.Name,
+		Age:       employee.Age,
+		Tasks:     employee.Tasks,
+		CreatedAt: time.Now(),
+		UpdatedAt: time.Now(),
+		DeletedAt: employee.DeletedAt,
+	}
+
+	return response, nil
+
+}

@@ -6,6 +6,7 @@ import (
 
 	"github.com/felipematheus1337/InsightFlow-AI/go-crud-ms/dto"
 	"github.com/felipematheus1337/InsightFlow-AI/go-crud-ms/mapper"
+	"github.com/felipematheus1337/InsightFlow-AI/go-crud-ms/service"
 	"github.com/gin-gonic/gin"
 )
 
@@ -36,7 +37,7 @@ func (h *EmployeeHandler) CreateEmployee(ctx *gin.Context) {
 
 	employee := mapper.CreateToSchema(employeeDTO)
 
-	response, err := p.service.CreateEmployee(employee)
+	response, err := h.service.CreateEmployee(employee)
 
 	if err != nil {
 		sendError(ctx, http.StatusInternalServerError, err.Error())

@@ -21,5 +21,5 @@ type EmployeeResponse struct {
 	CreatedAt time.Time      `json:"created_at"`
 	UpdatedAt time.Time      `json:"updatedAt"`
 	DeletedAt gorm.DeletedAt `json:"deletedAt"`
-	Tags      []string       `json:"tags"`
+	Tasks     []string       `json:"tasks"`
 }
