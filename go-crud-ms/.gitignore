@@ -8,6 +8,8 @@
 # Test binaries
 *.test
 
+.claude
+
 # Coverage
 *.out
 coverage.out

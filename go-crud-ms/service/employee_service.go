@@ -38,3 +38,28 @@ func (e EmployeeService) CreateEmployee(employee *schemas.Employee) (*schemas.Em
 	return response, nil
 
 }
+
+func (e EmployeeService) listEmployees() ([]*schemas.EmployeeResponse, error) {
+
+	var employees []*schemas.Employee
+
+	if err := e.db.Find(&employees).Error; err != nil {
+		return nil, err
+	}
+
+	var listEmployeesResponse []*schemas.EmployeeResponse
+
+	for _, emp := range employees {
+		listEmployeesResponse = append(listEmployeesResponse, &schemas.EmployeeResponse{
+			Name:      emp.Name,
+			Age:       emp.Age,
+			Tasks:     emp.Tasks,
+			CreatedAt: emp.CreatedAt,
+			UpdatedAt: emp.UpdatedAt,
+			DeletedAt: emp.DeletedAt,
+		})
+	}
+
+	return listEmployeesResponse, nil
+
+}
