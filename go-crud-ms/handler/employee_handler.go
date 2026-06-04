@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/felipematheus1337/InsightFlow-AI/go-crud-ms/dto"
+	"github.com/felipematheus1337/InsightFlow-AI/go-crud-ms/mapper"
 	"github.com/gin-gonic/gin"
 )
 
