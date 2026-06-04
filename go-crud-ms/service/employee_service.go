@@ -11,6 +11,10 @@ type EmployeeService struct {
 	db *gorm.DB
 }
 
+func NewEmployeeService(db *gorm.DB) *EmployeeService {
+	return &EmployeeService{db}
+}
+
 func (e EmployeeService) CreateEmployee(employee *schemas.Employee) (*schemas.EmployeeResponse, error) {
 
 	var response *schemas.EmployeeResponse
