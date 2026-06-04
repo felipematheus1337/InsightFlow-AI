@@ -1,9 +1,10 @@
-package schemas
+package handler
 
 import (
 	"net/http"
 	"strings"
 
+	"github.com/felipematheus1337/InsightFlow-AI/go-crud-ms/dto"
 	"github.com/gin-gonic/gin"
 )
 
@@ -20,7 +21,7 @@ func (h *EmployeeHandler) CreateEmployee(ctx *gin.Context) {
 	var employeeDTO dto.CreateEmployeeDTO
 
 	if err := ctx.ShouldBind(&employeeDTO); err != nil {
-		sendError(ctx http.StatusBadRequest, err.Error())
+		sendError(ctx, http.StatusBadRequest, err.Error())
 		return
 	}
 
@@ -34,14 +35,12 @@ func (h *EmployeeHandler) CreateEmployee(ctx *gin.Context) {
 
 	employee := mapper.CreateToSchema(employeeDTO)
 
-    response, err := p.service.CreateEmployee(employee)
+	response, err := p.service.CreateEmployee(employee)
 
-   if err != nil {
-	   sendError(ctx, http.StatusInternalServerError, err.Error())
-	   return
-   }
+	if err != nil {
+		sendError(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
 
-   sendSuccess(ctx, "create-employee", response, http.StatusCreated)
-
-
+	sendSuccess(ctx, "create-employee", response, http.StatusCreated)
 }
