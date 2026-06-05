@@ -39,7 +39,7 @@ func (e EmployeeService) CreateEmployee(employee *schemas.Employee) (*schemas.Em
 
 }
 
-func (e EmployeeService) listEmployees() ([]*schemas.EmployeeResponse, error) {
+func (e EmployeeService) ListEmployees() ([]*schemas.EmployeeResponse, error) {
 
 	var employees []*schemas.Employee
 

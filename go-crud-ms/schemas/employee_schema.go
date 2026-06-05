@@ -12,7 +12,7 @@ type Employee struct {
 	Name           string
 	Age            int
 	HasAnyTaskDone bool
-	Tasks          pq.StringArray `gorm:type:text[]`
+	Tasks          pq.StringArray `gorm:"type:text[]"`
 }
 
 type EmployeeResponse struct {

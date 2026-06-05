@@ -18,5 +18,6 @@ func RegisterEmployeeRoutes(v1 *gin.RouterGroup, e *handler.EmployeeHandler) {
 
 	{
 		v1.POST("/", e.CreateEmployee)
+		v1.GET("/", e.GetEmployees)
 	}
 }

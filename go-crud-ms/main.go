@@ -25,7 +25,7 @@ func main() {
 	port := os.Getenv("PORT")
 
 	if port == "" {
-		port = ":8080"
+		port = "8080"
 	}
 
 	db, err := config.InitializePostgres()
@@ -40,7 +40,7 @@ func main() {
 
 	router.InitializeRoutes(r, employeeHandler)
 
-	errorr := r.Run(port)
+	errorr := r.Run(":" + port)
 
 	if errorr != nil {
 		fmt.Println(errorr)

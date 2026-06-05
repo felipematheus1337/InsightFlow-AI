@@ -21,6 +21,8 @@ go.work.sum
 # Vendor (ignore se NÃO quiser versionar)
 vendor/
 
+.claude
+
 # IDEs
 .idea/
 .vscode/

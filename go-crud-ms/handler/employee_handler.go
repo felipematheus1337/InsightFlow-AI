@@ -46,3 +46,14 @@ func (h *EmployeeHandler) CreateEmployee(ctx *gin.Context) {
 
 	sendSuccess(ctx, "create-employee", response, http.StatusCreated)
 }
+
+func (e *EmployeeHandler) GetEmployees(ctx *gin.Context) {
+
+	res, err := e.service.ListEmployees()
+	
+	if err != nil {
+		sendError(ctx, http.StatusInternalServerError, err.Error())
+	}
+
+	sendSuccess(ctx, "get-employees", res, http.StatusOK)
+}
