@@ -3,46 +3,34 @@ package handler
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"log"
 
-	"github.com/felipematheus1337/InsightFlow-AI/go-consumer/config"
 	"github.com/felipematheus1337/InsightFlow-AI/go-consumer/response"
 	"github.com/felipematheus1337/InsightFlow-AI/go-consumer/service"
 )
 
-func Handle(ctx context.Context, payload []byte) error {
+type Handler struct {
+	docService *service.DocumentService
+}
 
-	var response *response.Response
-	if err := json.Unmarshal(payload, &response); err != nil {
-		return err
+func New(docService *service.DocumentService) *Handler {
+	return &Handler{docService: docService}
+}
+
+func (h *Handler) Handle(ctx context.Context, payload []byte) error {
+	var resp response.Response
+	if err := json.Unmarshal(payload, &resp); err != nil {
+		return fmt.Errorf("unmarshaling payload: %w", err)
 	}
 
-	log.Printf("Received a response: %s", response.Relatorio)
+	log.Printf("processando relatório (%d chars)", len(resp.Relatorio))
 
-	cfg, err := config.Load(ctx)
-
-	creds, err := cfg.AWS.Credentials.Retrieve(ctx)
+	fileName, err := h.docService.GenerateAndStore(ctx, resp.Relatorio)
 	if err != nil {
-		return err
+		return fmt.Errorf("generating/storing document: %w", err)
 	}
 
-	var pdfService service.PDFService
-
-	minioStorage, err := service.NewMinioStorage(
-		"mockEndpoint",
-		creds.AccessKeyID,
-		creds.SecretAccessKey,
-		"mockBucket",
-		false,
-	)
-
-	if err != nil {
-		return err
-	}
-
-	documentService := service.NewDocumentService(&pdfService, minioStorage)
-
-	go documentService.GenerateAndStore(ctx, response.Relatorio)
-
+	log.Printf("relatório armazenado: %s", fileName)
 	return nil
 }
