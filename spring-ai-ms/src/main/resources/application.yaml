@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: v1
+  data:
+    mongodb:
+      uri: ${MONGODB_URI:mongodb://localhost:27017/insight-ai}
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY:}
+      chat:
+        options:
+          model: ${OPENAI_CHAT_MODEL:gpt-5.2}
+
+app:
+  scheduler:
+    relatorio:
+      cron: ${RELATORIO_SCHEDULER_CRON:0 0 7 * * *}
+  employee:
+    api:
+      url: ${EMPLOYEE_API_URL:http://localhost:8080}
+  aws:
+    region: ${AWS_REGION:us-east-1}
+    sqs:
+      queue-name: ${SQS_QUEUE_NAME:relatorio-queue}
+      endpoint: ${SQS_ENDPOINT:}
